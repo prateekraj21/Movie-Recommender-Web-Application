@@ -23,4 +23,5 @@ Movie Recommendations: Based on an input movie name or genre, the system suggest
 3D Carousel Display: Recommendations are shown in a dynamic and interactive 3D carousel.
 Responsive Design: The application is designed to be responsive and works well on various devices.
 
+<img width="913" alt="Screenshot 2024-07-16 194854" src="https://github.com/user-attachments/assets/614ed668-43c3-4d5e-af98-3b80e6f90e90">
 
