@@ -1,0 +1,323 @@
+   <!-- <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Movie Recommender</title>
+       <style>
+           .hidden {
+               display: none;
+           }
+           body {
+                
+               background-image: linear-gradient( 109.6deg,  rgba(103,30,117,1) 11.2%, rgba(252,76,2,1) 91.1% );
+               background-size: cover;
+               background-position: center;
+               background-repeat: no-repeat;
+               background-attachment: fixed;
+               color: #fff;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               height: 100vh;
+               margin: 0;
+           }
+           h1 {
+               margin-top: 20px;
+               text-align: center;
+               width: 100%;
+               display: block;
+           }
+           #main {
+               background: rgba(0, 0, 0, 0.75);
+               padding: 20px 40px;
+               border-radius: 10px;
+               box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+               max-width: 400px;
+               width: 100%;
+               text-align: center;
+               margin-top: auto;
+               margin-bottom: auto;
+           }
+           form {
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               margin-top: 20px;
+           }
+           label, input, select, button {
+               margin: 10px;
+               padding: 10px;
+               border-radius: 5px;
+               border: none;
+               font-size: 16px;
+           }
+           button {
+               background-color: #e50914;
+               color: white;
+               cursor: pointer;
+           }
+           button:hover {
+               background-color: #f40612;
+           }
+           #results {
+               margin-top: 20px;
+               text-align: center;
+               width: 80%;
+           }
+           .result-item {
+               background: rgba(0, 0, 0, 0.5);
+               margin: 10px;
+               padding: 10px;
+               border-radius: 5px;
+               text-align: center;
+           }
+       </style>
+   </head>
+   <body>
+       <h1>Movie Recommender</h1>
+       <div id="main">
+           <form id="choiceForm">
+               <label for="recommendationType">How do you want the recommendation?</label>
+               <select id="recommendationType">
+                   <option value="">Select an option</option>
+                   <option value="genre">Based on Genre</option>
+                   <option value="movie">Based on Movie</option>
+               </select>
+           </form>
+       
+           <form id="recommendationForm" class="hidden">
+               <div id="genreInput" class="hidden">
+                   <label for="genre">Enter a genre:</label><br>
+                   <input type="text" id="genre" placeholder="Enter genre">
+               </div>
+               <div id="movieInput" class="hidden">
+                   <label for="movie_name">Enter a movie name:</label>
+                   <input type="text" id="movie_name" placeholder="Enter movie name">
+               </div>
+               <button type="submit">Recommend</button>
+           </form>
+       </div>
+   
+       <div id="results"></div>
+   
+       <script>
+           document.getElementById('recommendationType').addEventListener('change', function() {
+               const recommendationType = this.value;
+               const recommendationForm = document.getElementById('recommendationForm');
+               const genreInput = document.getElementById('genreInput');
+               const movieInput = document.getElementById('movieInput');
+   
+               // Hide both inputs initially
+               genreInput.classList.add('hidden');
+               movieInput.classList.add('hidden');
+   
+               // Show the appropriate input based on the user's choice
+               if (recommendationType === 'genre') {
+                   genreInput.classList.remove('hidden');
+                   recommendationForm.classList.remove('hidden');
+               } else if (recommendationType === 'movie') {
+                   movieInput.classList.remove('hidden');
+                   recommendationForm.classList.remove('hidden');
+               } else {
+                   recommendationForm.classList.add('hidden');
+               }
+           });
+   
+           document.getElementById('recommendationForm').addEventListener('submit', function(event) {
+               event.preventDefault();
+   
+               const recommendationType = document.getElementById('recommendationType').value;
+               let inputValue;
+               if (recommendationType === 'genre') {
+                   inputValue = document.getElementById('genre').value;
+               } else if (recommendationType === 'movie') {
+                   inputValue = document.getElementById('movie_name').value;
+               }
+   
+               fetch('/recommend', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({ type: recommendationType, value: inputValue }),
+               })
+               .then(response => response.json())
+               .then(data => {
+                   let results = document.getElementById('results');
+                   results.innerHTML = ''; // Clear previous results
+                   if (Array.isArray(data)) {
+                       data.forEach(item => {
+                           let div = document.createElement('div');
+                           div.className = 'result-item';
+                           if (typeof item === 'string') {
+                               div.innerText = item;
+                           } else {
+                               div.innerText = `${item[0]} - Rating: ${item[1]}`;
+                           }
+                           results.appendChild(div);
+                       });
+                   } else {
+                       let div = document.createElement('div');
+                       div.className = 'result-item';
+                       div.innerText = data;
+                       results.appendChild(div);
+                   }
+               });
+           });
+       </script>
+   </body>
+   </html>
+      -->
+
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Movie Recommender</title>
+          <style>
+              .hidden {
+                  display: none;
+              }
+              body {
+                  background-image: linear-gradient( 109.6deg, rgba(103,30,117,1) 11.2%, rgba(252,76,2,1) 91.1%);
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-attachment: fixed;
+                  color: #fff;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  height: 100vh;
+                  margin: 0;
+              }
+              h1 {
+                  margin-top: 20px;
+                  text-align: center;
+                  width: 100%;
+                  display: block;
+              }
+              #main {
+                  background: rgba(0, 0, 0, 0.75);
+                  padding: 20px 40px;
+                  border-radius: 10px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                  max-width: 400px;
+                  width: 100%;
+                  text-align: center;
+                  display: block;
+                  margin-top: auto;
+                  margin-bottom: auto;
+              }
+              form {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  margin-top: 20px;
+              }
+              label, input, select, button {
+                  margin: 10px;
+                  padding: 10px;
+                  border-radius: 5px;
+                  border: none;
+                  font-size: 16px;
+              }
+              button {
+                  background-color: #e50914;
+                  color: white;
+                  cursor: pointer;
+              }
+              button:hover {
+                  background-color: #f40612;
+              }
+          </style>
+      </head>
+      <body>
+          <h1>Movie Recommender</h1>
+          <div id="main">
+              <form id="choiceForm">
+                  <label for="recommendationType">How do you want the recommendation?</label>
+                  <select id="recommendationType">
+                      <option value="">Select an option</option>
+                      <option value="genre">Based on Genre</option>
+                      <option value="movie">Based on Movie</option>
+                  </select>
+              </form>
+          
+              <form id="recommendationForm" class="hidden">
+                  <div id="genreInput" class="hidden">
+                      <label for="genre">Enter a genre:</label><br>
+                      <input type="text" id="genre" placeholder="Enter genre">
+                  </div>
+                  <div id="movieInput" class="hidden">
+                      <label for="movie_name">Enter a movie name:</label><br>
+                      <input type="text" id="movie_name" placeholder="Enter movie name">
+                  </div>
+                  <button type="submit">Recommend</button>
+              </form>
+          </div>
+      
+          <script>
+              document.getElementById('recommendationType').addEventListener('change', function() {
+                  const recommendationType = this.value;
+                  const recommendationForm = document.getElementById('recommendationForm');
+                  const genreInput = document.getElementById('genreInput');
+                  const movieInput = document.getElementById('movieInput');
+      
+                  genreInput.classList.add('hidden');
+                  movieInput.classList.add('hidden');
+      
+                  if (recommendationType === 'genre') {
+                      genreInput.classList.remove('hidden');
+                      recommendationForm.classList.remove('hidden');
+                  } else if (recommendationType === 'movie') {
+                      movieInput.classList.remove('hidden');
+                      recommendationForm.classList.remove('hidden');
+                  } else {
+                      recommendationForm.classList.add('hidden');
+                  }
+              });
+      
+              document.getElementById('recommendationForm').addEventListener('submit', function(event) {
+                  event.preventDefault();
+      
+                  const recommendationType = document.getElementById('recommendationType').value;
+                  let inputValue;
+                  if (recommendationType === 'genre') {
+                      inputValue = document.getElementById('genre').value;
+                  } else if (recommendationType === 'movie') {
+                      inputValue = document.getElementById('movie_name').value;
+                  }
+      
+                  fetch('/recommend', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ 
+                          type: recommendationType,
+                          value: inputValue 
+                      }),
+                  })
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                      }
+                      return response.text();
+                  })
+                  .then(html => {
+                      console.log("Received response HTML");
+                      document.open();
+                      document.write(html);
+                      document.close();
+                  })
+                  .catch(error => {
+                      console.error('There was a problem with the fetch operation:', error);
+                  });
+              });
+          </script>
+      </body>
+      </html>
+      
