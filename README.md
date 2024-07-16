@@ -14,8 +14,7 @@ A Flask-based web application that recommends movies based on an input movie nam
 - **HTML5**: Structure of the web pages.
 - **CSS3**: Styling of the web pages, including the 3D carousel.
 - **JavaScript**: For handling user interactions and animations on the frontend.
-- **Jinja2**: Template engine for rendering HTML pages with dynamic data.
-
+  
 ### Additional Tools
 - **TMDB Dataset**: The dataset containing movie information used for recommendations.
 - **Google Fonts**: For enhanced typography in the application.
@@ -60,4 +59,8 @@ A Flask-based web application that recommends movies based on an input movie nam
 
 
 <img width="913" alt="Screenshot 2024-07-16 194854" src="https://github.com/user-attachments/assets/614ed668-43c3-4d5e-af98-3b80e6f90e90">
+
+https://github.com/user-attachments/assets/ac8050e8-08a8-4fd6-9d98-46b5328f5b78
+
+
 
